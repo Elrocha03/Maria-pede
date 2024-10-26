@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maria Food</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #e63946;
+            text-shadow: 1px 1px 2px #fff;
+            margin-bottom: 10px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .input-section, .payment-section {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .payment-option {
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .payment-option:hover {
+            background-color: #e9ecef;
+            transform: scale(1.03);
+        }
+        .motivational-quote {
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Maria Food</h1>
+    <div class="container input-section" id="inputSection">
+        <h2>O que você quer, Maria?</h2>
+        <input type="text" id="userInput" placeholder="Escreva seu pedido aqui..." />
+        <button onclick="showPaymentOptions()">Próximo</button>
+    </div>
+    <div class="container payment-section" id="paymentSection" style="display: none;">
+        <h2>Pagamento Sorteado:</h2>
+        <div id="paymentOptions"></div>
+        <button onclick="sendWhatsApp()">Concordar</button>
+    </div>
+    <div class="motivational-quote">
+        "Você é o que você come! Faça escolhas saudáveis!"  
+    </div>
+
+    <script>
+        const paymentOptionsList = [
+            "Beijinho", 
+            "Abraço", 
+            "Carinho", 
+            "Afago", 
+            "Sorriso", 
+            "Cuidado", 
+            "Apoio", 
+            "Beijo de boa noite", 
+            "Café da manhã na cama", 
+            "Um dia de folga"
+        ];
+
+        // Exibe a seção de entrada ao carregar
+        document.getElementById("inputSection").style.display = "block";
+
+        function showPaymentOptions() {
+            const userInput = document.getElementById("userInput").value;
+            if (userInput.trim() === "") {
+                alert("Por favor, escreva seu pedido!");
+                return;
+            }
+
+            // Gera um pagamento aleatório
+            const randomPayment = paymentOptionsList[Math.floor(Math.random() * paymentOptionsList.length)];
+
+            // Atualiza o DOM
+            document.getElementById("paymentOptions").innerText = `Você pediu: ${userInput}. Pagamento: ${randomPayment}`;
+            document.getElementById("inputSection").style.display = "none";
+            document.getElementById("paymentSection").style.display = "block";
+        }
+
+        function sendWhatsApp() {
+            const userInput = document.getElementById("userInput").value;
+            const paymentOption = document.getElementById("paymentOptions").innerText;
+            const message = `${paymentOption}\nPedido: ${userInput}`;
+            const whatsappNumber = "34991723701";
+            const whatsappLink = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(message)}`;
+            window.open(whatsappLink, '_blank');
+            alert("Enviando mensagem para o WhatsApp...");
+        }
+    </script>
+</body>
+</html>
